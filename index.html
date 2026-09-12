@@ -5,135 +5,155 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="瞬間英作文">
+<meta name="apple-mobile-web-app-title" content="英語トレーナー">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon.svg">
-<title>ビジネス瞬間英作文</title>
+<title>ビジネス英語トレーナー</title>
 <style>
-:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#222;background:#f4f5f7}
-*{box-sizing:border-box}body{margin:0}.app{max-width:560px;margin:auto;min-height:100vh;padding:calc(14px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom))}
-header{display:flex;justify-content:space-between;align-items:center;margin:4px 0 16px}
-h1{font-size:20px;margin:0}.stats{font-size:13px;color:#666}
-.card,.start{background:#fff;border-radius:18px;padding:22px;box-shadow:0 3px 14px #0001}
-.start{margin-top:20px}.label{font-size:13px;color:#777;margin-bottom:8px}
-.title{font-size:20px;font-weight:700;margin-bottom:14px}.jp{font-size:23px;font-weight:650;line-height:1.55;margin:12px 0 20px}
-.badge{display:inline-block;background:#eef0f3;border-radius:99px;padding:5px 10px;font-size:12px;color:#555}
-.progress{height:7px;background:#e7e9ed;border-radius:99px;overflow:hidden;margin:14px 0 22px}.progress>div{height:100%;background:#222;width:0;transition:.2s}
-.timer{text-align:center;font-size:32px;font-weight:700;height:42px}
-.answer{display:none;background:#f6f7f8;border-radius:12px;padding:15px;font-size:18px;line-height:1.5;margin:14px 0}
-.answer.show{display:block}.note{font-size:13px;color:#666;margin-top:8px}
-button,select{font:inherit}button{width:100%;border:0;border-radius:12px;padding:14px;margin-top:9px;font-weight:650;font-size:16px}
-.primary{background:#222;color:#fff}.secondary{background:#eceff2}.good{background:#e7f3e9}.bad{background:#f7e7e7}
-.row{display:flex;gap:9px}.row button{flex:1}select{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;background:#fff}
-.small{font-size:12px;color:#777;line-height:1.6}.hidden{display:none!important}
-.install{margin-top:12px;padding:12px;border-radius:12px;background:#f0f3f6;font-size:13px;line-height:1.55}
+*{box-sizing:border-box}body{margin:0;background:#f4f5f7;color:#222;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.app{max-width:620px;margin:auto;min-height:100vh;padding:16px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}h1{font-size:20px;margin:0}.stats{font-size:12px;color:#666}
+.card,.panel{background:#fff;border-radius:18px;padding:20px;box-shadow:0 3px 14px #0001;margin-bottom:14px}
+.title{font-size:20px;font-weight:700;margin-bottom:10px}.label{font-size:13px;color:#777;margin-bottom:8px}.big{font-size:25px;font-weight:700;line-height:1.5;margin:18px 0}.en{font-size:22px;font-weight:650;line-height:1.45}
+button,select{font:inherit}button{width:100%;border:0;border-radius:12px;padding:14px;margin-top:9px;font-weight:650;font-size:16px}.primary{background:#222;color:#fff}.secondary{background:#eceff2}.good{background:#e7f3e9}.bad{background:#f7e7e7}.voice{background:#e8eef8}
+.row{display:flex;gap:9px}.row button{flex:1}select{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;background:#fff}.small{font-size:12px;color:#777;line-height:1.6}.hidden{display:none!important}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.grid button{margin-top:0}.home-card{text-align:left}.home-card strong{display:block;font-size:17px;margin-bottom:4px}.home-card span{font-size:12px;color:#666}
+.tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:14px}.tabs button{margin:0;padding:11px 6px;font-size:13px;background:#e9ebee}.tabs .active{background:#222;color:#fff}
+.badge,.pill{display:inline-block;background:#eef0f3;border-radius:99px;padding:5px 10px;font-size:12px;color:#555}.progress{height:7px;background:#e7e9ed;border-radius:99px;overflow:hidden;margin:14px 0 20px}.progress>div{height:100%;background:#222;width:0}
+.answer{display:none;background:#f6f7f8;border-radius:12px;padding:15px;margin:14px 0}.answer.show{display:block}.note{font-size:13px;color:#666;margin-top:8px;line-height:1.55}.timer{text-align:center;font-size:30px;font-weight:700;height:40px}.flash-main{min-height:190px;display:flex;align-items:center;justify-content:center;text-align:center}
 </style>
 </head>
 <body>
 <div class="app">
-<header><h1>ビジネス瞬間英作文</h1><div class="stats">正解率 <span id="accuracy">--</span></div></header>
+<header><h1>ビジネス英語トレーナー</h1><div class="stats">正解率 <span id="accuracy">--</span></div></header>
 
-<div id="start" class="start">
-<div class="label">今日の練習</div>
-<div class="title">3〜5分でサクッと練習</div>
-<select id="category">
-<option value="meeting">会議・打ち合わせ</option>
-<option value="customer">海外顧客対応</option>
-<option value="general">仕事の日常表現</option>
-</select>
-<button class="primary" onclick="startSession()">スタート</button>
-<div class="install"><b>iPhoneでアプリのように使うには</b><br>Safariでこのページを開き、共有 →「ホーム画面に追加」を選んでください。</div>
-<p class="small">日本語を見たら、まず3秒くらいで英語を言ってみましょう。</p>
+<div id="home">
+  <div class="panel">
+    <div class="title">今日の練習</div>
+    <div class="small" id="dueText"></div>
+    <div class="grid" style="margin-top:14px">
+      <button class="home-card secondary" onclick="openMode('sentence')"><strong>瞬間英作文</strong><span>日本語 → 英語</span></button>
+      <button class="home-card secondary" onclick="openMode('flash')"><strong>単語カード</strong><span>英→日 / 日→英</span></button>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="label">瞬間英作文カテゴリ</div>
+    <select id="category">
+      <option value="all">すべて</option>
+      <option value="meeting">会議・打ち合わせ</option>
+      <option value="customer">海外顧客対応</option>
+      <option value="general">仕事の日常表現</option>
+      <option value="travel">海外出張</option>
+    </select>
+    <p class="small">毎回ランダム出題。間違えた問題・復習期限が来た問題を優先します。</p>
+  </div>
 </div>
 
-<div id="quiz" class="card hidden">
-<span class="badge" id="badge"></span>
-<div class="progress"><div id="bar"></div></div>
-<div class="label">日本語</div><div class="jp" id="question"></div>
-<div class="timer" id="timer">3</div>
-<button id="showBtn" class="primary" onclick="showAnswer()">答えを見る</button>
-<div id="answer" class="answer"><div id="en"></div><div id="note" class="note"></div></div>
-<div id="resultBtns" class="hidden">
-<div class="label">自分の答えは？</div>
-<div class="row"><button class="good" onclick="judge(true)">○ 正解</button><button class="bad" onclick="judge(false)">× 不正解</button></div>
+<div id="sentenceMode" class="hidden">
+  <div class="tabs"><button class="active">瞬間英作文</button><button onclick="openMode('flash')">単語カード</button><button onclick="goHome()">ホーム</button></div>
+  <div class="card">
+    <span class="badge" id="sBadge"></span> <span class="pill" id="sCat"></span>
+    <div class="progress"><div id="sBar"></div></div>
+    <div class="label">日本語</div><div class="big" id="sQ"></div><div class="timer" id="timer">3</div>
+    <button id="sShow" class="primary" onclick="showSentenceAnswer()">答えを見る</button>
+    <div id="sAns" class="answer"><div class="en" id="sEn"></div><button class="voice" onclick="speakCurrentSentence()">🔊 英語を聞く</button><div class="note" id="sNote"></div></div>
+    <div id="sJudge" class="hidden"><div class="row"><button class="good" onclick="judgeSentence(true)">○ できた</button><button class="bad" onclick="judgeSentence(false)">× 間違えた</button></div></div>
+  </div>
 </div>
+
+<div id="flashMode" class="hidden">
+  <div class="tabs"><button onclick="openMode('sentence')">瞬間英作文</button><button class="active">単語カード</button><button onclick="goHome()">ホーム</button></div>
+  <div class="panel">
+    <div class="label">出題方向</div>
+    <select id="direction" onchange="startFlash()"><option value="mix">英→日 / 日→英をランダム</option><option value="en-ja">英語 → 日本語</option><option value="ja-en">日本語 → 英語</option></select>
+  </div>
+  <div class="card">
+    <span class="badge" id="fBadge"></span> <span class="pill" id="fType"></span>
+    <div class="progress"><div id="fBar"></div></div>
+    <div class="flash-main"><div><div class="label" id="fPromptLabel"></div><div class="big" id="fFront"></div><button id="frontVoice" class="voice hidden" onclick="speakFlash()">🔊 発音を聞く</button></div></div>
+    <button id="fShow" class="primary" onclick="showFlashAnswer()">答えを見る</button>
+    <div id="fAns" class="answer"><div class="label" id="fAnswerLabel"></div><div class="en" id="fBack"></div><button id="backVoice" class="voice hidden" onclick="speakFlash()">🔊 英語を聞く</button><div class="note" id="fNote"></div></div>
+    <div id="fJudge" class="hidden"><div class="row"><button class="good" onclick="judgeFlash(true)">○ 覚えた</button><button class="bad" onclick="judgeFlash(false)">× もう一度</button></div></div>
+  </div>
 </div>
 
 <div id="finish" class="card hidden">
-<div class="title">お疲れさまでした！</div>
-<div id="score"></div>
-<p class="small">間違えた問題は次回優先して出題されます。</p>
-<button class="primary" onclick="startSession()">もう一度</button>
-<button class="secondary" onclick="goHome()">最初に戻る</button>
+  <div class="title">お疲れさまでした！</div><div id="score"></div>
+  <p class="small">間違えた問題は次回以降、優先して再出題します。</p>
+  <button class="primary" onclick="repeatMode()">もう一度</button><button class="secondary" onclick="goHome()">ホームへ</button>
 </div>
 </div>
 
 <script>
-const data={
-meeting:[
-["少しお時間ありますか？","Do you have a moment?","定番の会議表現"],
-["この問題について話し合いたいです。","I'd like to discuss this issue.","discuss + 目的語。about は不要"],
-["もう少し詳しく説明していただけますか？","Could you explain that in a little more detail?","explain + 目的語。about は不要"],
-["私の理解が正しければ、納期は金曜日ですね。","If I understand correctly, the deadline is Friday.","If I understand correctly, ..."],
-["別の選択肢も検討すべきです。","We should consider other options.","consider + 目的語。about は不要"],
-["次の議題に移りましょう。","Let's move on to the next topic.","move on to ..."],
-["今日はここまでにしましょう。","That's all for today.","会議の締めに便利"],
-["金曜日で次回の会議はどうですか？","How about Friday for the next meeting?","How about + 名詞 で提案"],
-["金曜日はご都合いかがですか？","Would Friday work for you?","日程調整で便利"],
-["この件について何か懸念があります。","I have some concerns about this issue.","have concerns about ..."]
-],
-customer:[
-["現在、この問題の原因を調査しています。","We are investigating the cause of this issue.","investigate the cause"],
-["まだ原因は分かっていません。","We don't know yet.","yet = まだ"],
-["設計には問題がないことを確認しました。","We have confirmed that there is no problem with the design.","confirm + 内容"],
-["現在、材料と製造工程を確認しています。","We are currently checking the material and manufacturing process.","manufacturing process"],
-["明日までに原因を特定できます。","We can identify the cause by tomorrow.","by tomorrow = 明日までに"],
-["この解析は私たちにとって最優先です。","This analysis is our top priority.","top priority"],
-["明日までに速報を提出します。","I'll submit a preliminary report by tomorrow.","preliminary report"],
-["木曜日までに解決策を提案します。","I'll propose a solution by Thursday.","propose a solution"],
-["何かデータが必要なら、教えてください。","If you need any data, please let us know.","let us know"],
-["できるだけ早く対応します。","We'll handle it as soon as possible.","handle it"]
-],
-general:[
-["プロジェクトは順調に進んでいます。","The project is going well.","It's going well. も可"],
-["プロジェクトは75%完了しています。","The project is 75% complete.","complete は形容詞としても使える"],
-["少し予定より遅れています。","I'm a little behind schedule.","a little = 少し"],
-["明日の朝までに終わらせます。","I'll finish it by tomorrow morning.","by = 期限"],
-["今のところすべて順調です。","Everything is going well so far.","so far = 今のところ"],
-["私は9時から10時、または3時から4時なら空いています。","I'm available from 9 to 10 AM, or from 3 to 4 PM.","available = 都合がつく"],
-["その時間で大丈夫です。","That time works for me.","日程調整で便利"],
-["ご協力ありがとうございます。","Thank you for your cooperation.","定番表現"],
-["在宅勤務をしたいです。","I'd like to work from home.","仕事では work from home が自然"],
-["確認でき次第、連絡します。","I'll let you know as soon as I confirm it.","as soon as ..."]
-]};
+const sentenceData=[
+{id:"s1",cat:"meeting",ja:"少しお時間ありますか？",en:"Do you have a moment?",note:"定番の会議表現"},
+{id:"s2",cat:"meeting",ja:"この問題について話し合いたいです。",en:"I'd like to discuss this issue.",note:"discuss + 目的語。about は不要"},
+{id:"s3",cat:"meeting",ja:"もう少し詳しく説明していただけますか？",en:"Could you explain that in a little more detail?",note:"explain + 目的語。about は不要"},
+{id:"s4",cat:"meeting",ja:"別の選択肢も検討すべきです。",en:"We should consider other options.",note:"consider + 目的語。about は不要"},
+{id:"s5",cat:"customer",ja:"現在、この問題の原因を調査しています。",en:"We are investigating the cause of this issue.",note:"investigate the cause"},
+{id:"s6",cat:"customer",ja:"設計には問題がないことを確認しました。",en:"We have confirmed that there is no problem with the design.",note:"confirm + 内容"},
+{id:"s7",cat:"customer",ja:"明日までに速報を提出します。",en:"I'll submit a preliminary report by tomorrow.",note:"preliminary report"},
+{id:"s8",cat:"customer",ja:"できるだけ早く対応します。",en:"We'll handle it as soon as possible.",note:"handle it"},
+{id:"s9",cat:"general",ja:"プロジェクトは順調に進んでいます。",en:"The project is going well.",note:"It's going well. も可"},
+{id:"s10",cat:"general",ja:"少し予定より遅れています。",en:"I'm a little behind schedule.",note:"a little = 少し"},
+{id:"s11",cat:"general",ja:"在宅勤務をしたいです。",en:"I'd like to work from home.",note:"work from home"},
+{id:"s12",cat:"general",ja:"確認でき次第、連絡します。",en:"I'll let you know as soon as I confirm it.",note:"as soon as ..."},
+{id:"s13",cat:"travel",ja:"乗り継ぎ便はどのゲートですか？",en:"Which gate is my connecting flight?",note:"connecting flight"},
+{id:"s14",cat:"travel",ja:"この荷物は最終目的地まで預けられますか？",en:"Can I check this bag through to my final destination?",note:"check a bag through"}
+];
 
-let stats=JSON.parse(localStorage.getItem("bieStats")||'{"correct":0,"total":0,"weak":{}}');
-let qs=[],i=0,ok=0,total=0,timer=null,left=3;
-function acc(){document.getElementById("accuracy").textContent=stats.total?Math.round(stats.correct/stats.total*100)+"%":"--"} acc();
-function startSession(){
- let cat=document.getElementById("category").value;
- qs=[...data[cat]].sort((a,b)=>(stats.weak[b[1]]||0)-(stats.weak[a[1]]||0)).slice(0,8);
- i=ok=total=0;document.getElementById("start").classList.add("hidden");document.getElementById("finish").classList.add("hidden");document.getElementById("quiz").classList.remove("hidden");showQ();
-}
-function showQ(){
- clearInterval(timer);let q=qs[i];
- document.getElementById("badge").textContent=`${i+1} / ${qs.length}`;
- document.getElementById("bar").style.width=(i/qs.length*100)+"%";
- document.getElementById("question").textContent=q[0];document.getElementById("en").textContent=q[1];document.getElementById("note").textContent=q[2];
- document.getElementById("answer").classList.remove("show");document.getElementById("resultBtns").classList.add("hidden");document.getElementById("showBtn").classList.remove("hidden");
- left=3;document.getElementById("timer").textContent=left;
- timer=setInterval(()=>{left--;document.getElementById("timer").textContent=left;if(left<=0){clearInterval(timer);showAnswer()}},1000);
-}
-function showAnswer(){clearInterval(timer);document.getElementById("timer").textContent="";document.getElementById("answer").classList.add("show");document.getElementById("showBtn").classList.add("hidden");document.getElementById("resultBtns").classList.remove("hidden")}
-function judge(good){
- total++;if(good)ok++;stats.total++;if(good)stats.correct++;else stats.weak[qs[i][1]]=(stats.weak[qs[i][1]]||0)+1;
- localStorage.setItem("bieStats",JSON.stringify(stats));acc();i++;
- if(i>=qs.length)finish();else showQ();
-}
-function finish(){document.getElementById("quiz").classList.add("hidden");document.getElementById("finish").classList.remove("hidden");document.getElementById("score").textContent=`${total}問中 ${ok}問正解（${Math.round(ok/total*100)}%）`}
-function goHome(){document.getElementById("finish").classList.add("hidden");document.getElementById("start").classList.remove("hidden")}
-if("serviceWorker" in navigator) window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
-</script>
-</body>
-</html>
+const flashData=[
+{id:"f1",type:"word",en:"deadline",ja:"締め切り・期限",note:"meet a deadline"},
+{id:"f2",type:"word",en:"concern",ja:"懸念・心配",note:"have concerns about ..."},
+{id:"f3",type:"word",en:"available",ja:"都合がつく・利用できる",note:"I'm available from 3 PM."},
+{id:"f4",type:"word",en:"investigate",ja:"調査する",note:"investigate the cause"},
+{id:"f5",type:"word",en:"identify",ja:"特定する",note:"identify the cause"},
+{id:"f6",type:"phrase",en:"top priority",ja:"最優先事項",note:"This is our top priority."},
+{id:"f7",type:"phrase",en:"behind schedule",ja:"予定より遅れて",note:"We're behind schedule."},
+{id:"f8",type:"phrase",en:"so far",ja:"今のところ",note:"Everything is going well so far."},
+{id:"f9",type:"phrase",en:"as soon as possible",ja:"できるだけ早く",note:"ASAP と略すこともある"},
+{id:"f10",type:"phrase",en:"let me know",ja:"教えてください・知らせてください",note:"Please let me know."},
+{id:"f11",type:"phrase",en:"work from home",ja:"在宅勤務をする",note:"仕事の文脈で自然"},
+{id:"f12",type:"phrase",en:"preliminary report",ja:"速報・暫定報告",note:"preliminary = 暫定的な"},
+{id:"f13",type:"phrase",en:"manufacturing process",ja:"製造工程",note:"manufacturing flow より自然"},
+{id:"f14",type:"phrase",en:"move on to",ja:"〜へ移る",note:"Let's move on to the next topic."},
+{id:"f15",type:"phrase",en:"Would that be okay?",ja:"それで大丈夫でしょうか？",note:"丁寧な確認"},
+{id:"f16",type:"phrase",en:"Do you have a moment?",ja:"少しお時間ありますか？",note:"相談の切り出し"},
+{id:"f17",type:"idiom",en:"handle it",ja:"それに対応する",note:"I'll handle it."},
+{id:"f18",type:"phrase",en:"connecting flight",ja:"乗り継ぎ便",note:"空港でよく使う"}
+];
+
+const catName={meeting:"会議",customer:"顧客対応",general:"日常業務",travel:"海外出張"};
+let stats=JSON.parse(localStorage.getItem("bieV2Stats")||'{"correct":0,"total":0,"items":{}}');
+let currentMode="sentence",list=[],idx=0,sessionOK=0,sessionTotal=0,timer=null,left=3,activeDir="en-ja";
+
+function today(){return Math.floor(Date.now()/86400000)}
+function state(id){if(!stats.items[id])stats.items[id]={wrong:0,streak:0,due:0};return stats.items[id]}
+function priority(id){let s=state(id);return s.wrong*10+(s.due<=today()?8:0)+Math.random()*5}
+function ordered(a){return [...a].sort((x,y)=>priority(y.id)-priority(x.id))}
+function save(){localStorage.setItem("bieV2Stats",JSON.stringify(stats));renderStats()}
+function schedule(id,good){let s=state(id);if(good){s.streak++;s.wrong=Math.max(0,s.wrong-1);let d=[1,2,4,7,14,30][Math.min(s.streak-1,5)];s.due=today()+d}else{s.streak=0;s.wrong++;s.due=today()}}
+function renderStats(){document.getElementById("accuracy").textContent=stats.total?Math.round(stats.correct/stats.total*100)+"%":"--";let due=[...sentenceData,...flashData].filter(x=>{let s=state(x.id);return (s.wrong>0||s.streak>0)&&s.due<=today()}).length;document.getElementById("dueText").textContent=due?`今日は ${due} 件の復習候補があります。`:"今日は新しい問題を中心に練習できます。"}
+function hideAll(){["home","sentenceMode","flashMode","finish"].forEach(x=>document.getElementById(x).classList.add("hidden"))}
+function goHome(){clearInterval(timer);hideAll();document.getElementById("home").classList.remove("hidden");renderStats()}
+function openMode(m){currentMode=m;hideAll();document.getElementById(m==="sentence"?"sentenceMode":"flashMode").classList.remove("hidden");m==="sentence"?startSentence():startFlash()}
+function repeatMode(){openMode(currentMode)}
+
+function startSentence(){let c=document.getElementById("category").value,p=c==="all"?sentenceData:sentenceData.filter(x=>x.cat===c);list=ordered(p).slice(0,Math.min(10,p.length));idx=0;sessionOK=0;sessionTotal=0;showSentence()}
+function showSentence(){clearInterval(timer);let q=list[idx];document.getElementById("sBadge").textContent=`${idx+1} / ${list.length}`;document.getElementById("sCat").textContent=catName[q.cat];document.getElementById("sBar").style.width=(idx/list.length*100)+"%";document.getElementById("sQ").textContent=q.ja;document.getElementById("sEn").textContent=q.en;document.getElementById("sNote").textContent=q.note;document.getElementById("sAns").classList.remove("show");document.getElementById("sJudge").classList.add("hidden");document.getElementById("sShow").classList.remove("hidden");left=3;document.getElementById("timer").textContent=left;timer=setInterval(()=>{left--;document.getElementById("timer").textContent=left;if(left<=0){clearInterval(timer);showSentenceAnswer()}},1000)}
+function showSentenceAnswer(){clearInterval(timer);document.getElementById("timer").textContent="";document.getElementById("sAns").classList.add("show");document.getElementById("sJudge").classList.remove("hidden");document.getElementById("sShow").classList.add("hidden")}
+function judgeSentence(g){sessionTotal++;stats.total++;if(g){sessionOK++;stats.correct++}schedule(list[idx].id,g);save();idx++;idx>=list.length?finish():showSentence()}
+
+function speak(t){if(!("speechSynthesis" in window)){alert("音声読み上げに対応していません。");return}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.88;speechSynthesis.speak(u)}
+function speakCurrentSentence(){speak(list[idx].en)}
+
+function startFlash(){list=ordered(flashData).slice(0,12);idx=0;sessionOK=0;sessionTotal=0;showFlash()}
+function showFlash(){let q=list[idx],d=document.getElementById("direction").value;activeDir=d==="mix"?(Math.random()<.5?"en-ja":"ja-en"):d;document.getElementById("fBadge").textContent=`${idx+1} / ${list.length}`;document.getElementById("fType").textContent=q.type==="word"?"単語":q.type==="idiom"?"熟語":"フレーズ";document.getElementById("fBar").style.width=(idx/list.length*100)+"%";document.getElementById("fPromptLabel").textContent=activeDir==="en-ja"?"英語 → 日本語":"日本語 → 英語";document.getElementById("fFront").textContent=activeDir==="en-ja"?q.en:q.ja;document.getElementById("fAnswerLabel").textContent=activeDir==="en-ja"?"日本語":"英語";document.getElementById("fBack").textContent=activeDir==="en-ja"?q.ja:q.en;document.getElementById("fNote").textContent=q.note;document.getElementById("fAns").classList.remove("show");document.getElementById("fJudge").classList.add("hidden");document.getElementById("fShow").classList.remove("hidden");document.getElementById("frontVoice").classList.toggle("hidden",activeDir!=="en-ja");document.getElementById("backVoice").classList.toggle("hidden",activeDir!=="ja-en")}
+function showFlashAnswer(){document.getElementById("fAns").classList.add("show");document.getElementById("fJudge").classList.remove("hidden");document.getElementById("fShow").classList.add("hidden")}
+function speakFlash(){speak(list[idx].en)}
+function judgeFlash(g){sessionTotal++;stats.total++;if(g){sessionOK++;stats.correct++}schedule(list[idx].id,g);save();idx++;idx>=list.length?finish():showFlash()}
+
+function finish(){hideAll();document.getElementById("finish").classList.remove("hidden");document.getElementById("score").textContent=`${sessionTotal}問中 ${sessionOK}問できた（${Math.round(sessionOK/sessionTotal*100)}%）`}
+renderStats();
+if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+</script></body></html>
